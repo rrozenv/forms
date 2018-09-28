@@ -31,10 +31,6 @@ final class CBMCancelSubscriptionNavigationController: UINavigationController, C
         bindViewModel()
     }
     
-    @objc func back(sender: UIBarButtonItem) {
-        self.popViewController(animated: true)
-    }
-    
     private func bindViewModel() {
         self.navigateTo(screen: .generalInfo)
     }
@@ -43,7 +39,9 @@ final class CBMCancelSubscriptionNavigationController: UINavigationController, C
         switch screen {
         case .generalInfo: toGeneralInfo()
         case .addressInfo: toEnterAddressData()
-        case .confirmation: toConfirmation()
+        case .confirmation:
+            print(userInfo)
+            toConfirmation()
         }
     }
     

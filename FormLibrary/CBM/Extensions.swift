@@ -12,13 +12,10 @@ import UIKit
 extension UIView {
     static func findFirstTextField(in view: UIView)-> UITextField? {
         return view.subviews.compactMap { (view) -> UITextField? in
-            if view is UITextField {
-                return view as? UITextField
-            } else {
-                return UIView.findFirstTextField(in: view)
-            }
-            }
-            .first
+            if view is UITextField { return view as? UITextField }
+            else { return UIView.findFirstTextField(in: view) }
+        }
+        .first
     }
 }
 
@@ -41,7 +38,7 @@ extension String {
         return finalString as String
     }
     
-    var digits: String {
+    var digitsOnly: String {
         return components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
     }
     

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// Unique form implemntations should inherit from this class
 open class CBMFormTableViewController: UITableViewController {
     
     // MARK: Properties
@@ -19,37 +20,7 @@ open class CBMFormTableViewController: UITableViewController {
         self.init(style: .grouped)
         self.sections = sections
     }
-
-    open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].headerTitle
-    }
-
-    open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footerTitle
-    }
-
-    open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = sections[section].headerView else { return nil }
-        return headerView
-    }
-
-    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let footerView = sections[section].footerView else { return nil }
-        return footerView
-    }
     
-    open override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    open override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-
 }
 
 // MARK: UITableViewDataSource
@@ -86,14 +57,39 @@ extension CBMFormTableViewController {
 extension CBMFormTableViewController {
     
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let cellAttributes = fetchCellAttributes(at: indexPath)
-        
-        if let didSelectClosure = cellAttributes.didSelectClosure {
-            didSelectClosure(cellAttributes)
-        }
-        
+        cellAttributes.didSelectClosure?(cellAttributes)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].headerTitle
+    }
+    
+    open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return sections[section].footerTitle
+    }
+    
+    open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerView = sections[section].headerView else { return nil }
+        return headerView
+    }
+    
+    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard let footerView = sections[section].footerView else { return nil }
+        return footerView
+    }
+    
+    open override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    open override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
     
 }

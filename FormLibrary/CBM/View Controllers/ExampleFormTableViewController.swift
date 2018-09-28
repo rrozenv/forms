@@ -11,7 +11,7 @@ import UIKit
 
 final class CBMUserInfoFormViewController: CBMFormTableViewController {
 
-    var viewModel: CBMUserInfoFormViewModel!
+    var viewModel: CBMUserInfoFormViewModel! //Set in init
     var screenType: ScreenType = .generalInfo
     
     // MARK: - Properties
@@ -106,7 +106,7 @@ extension CBMUserInfoFormViewController {
     private func createFirstNameRow() -> CBMFormCellAttributes {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String else { return false }
-            return text.count > 5
+            return text.count > 3
         }
         
         return CBMFormCellAttributes(id: GeneralPageTag.firstName.rawValue,
@@ -122,7 +122,7 @@ extension CBMUserInfoFormViewController {
     private func createLastNameRow() -> CBMFormCellAttributes {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String else { return false }
-            return text.count > 5
+            return text.count > 3
         }
     
         return CBMFormCellAttributes(id: GeneralPageTag.lastName.rawValue,
@@ -154,7 +154,7 @@ extension CBMUserInfoFormViewController {
     private func createPhoneRow() -> CBMFormCellAttributes {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String else { return false }
-            return text.digits.count == 10
+            return text.digitsOnly.count == 10
         }
         
         return CBMFormCellAttributes(id: GeneralPageTag.phone.rawValue,
@@ -192,7 +192,7 @@ extension CBMUserInfoFormViewController {
     private func createStreetNameRow() -> CBMFormCellAttributes {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String else { return false }
-            return text.count > 5
+            return text.count > 3
         }
         
         return CBMFormCellAttributes(id: AddressPageTag.street.rawValue,
@@ -208,7 +208,7 @@ extension CBMUserInfoFormViewController {
     private func createUnitRow() -> CBMFormCellAttributes {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String else { return false }
-            return text.count > 5
+            return text.count >= 1
         }
         
         return CBMFormCellAttributes(id: AddressPageTag.unit.rawValue,
@@ -224,7 +224,7 @@ extension CBMUserInfoFormViewController {
     private func createCityRow() -> CBMFormCellAttributes {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String else { return false }
-            return text.count > 5
+            return text.count > 3
         }
         
         return CBMFormCellAttributes(id: AddressPageTag.city.rawValue,
@@ -240,7 +240,7 @@ extension CBMUserInfoFormViewController {
     private func createStateRow() -> CBMFormCellAttributes {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String else { return false }
-            return text.count > 5
+            return text.count > 1
         }
         
         return CBMFormCellAttributes(id: AddressPageTag.state.rawValue,
@@ -257,11 +257,11 @@ extension CBMUserInfoFormViewController {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String,
                 let _ = Int(text) else { return false }
-            return text.count == 4
+            return text.count == 5
         }
         
         return CBMFormCellAttributes(id: AddressPageTag.zipcode.rawValue,
-                                     type: .text,
+                                     type: .digits,
                                      totalRowCountInSection: AddressPageTag.allTags.count,
                                      title: AddressPageConst.zipCodeTitle,
                                      placeholder: AddressPageConst.cityTitle,
@@ -347,7 +347,7 @@ extension CBMUserInfoFormViewController {
         case phone
         case creditCard
         
-        static var allTags: [GeneralPageTag] = [.firstName, .lastName, .email, .phone, .creditCard]
+        static let allTags: [GeneralPageTag] = [.firstName, .lastName, .email, .phone, .creditCard]
     }
     
     enum AddressPageTag: Int {

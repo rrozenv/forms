@@ -1,5 +1,5 @@
 //
-//  CellAttributes.swift
+//  CBMFormSectionAttributes.swift
 //  FormLibrary
 //
 //  Created by Robert Rozenvasser on 9/25/18.
@@ -7,20 +7,43 @@
 //
 
 import Foundation
+import UIKit
 
+/// Defines sections of a tableview
+public final class CBMFormSectionAttributes {
+    
+    // MARK: Properties
+    public var rows: [CBMFormCellAttributes] = []
+    public var headerTitle: String?
+    public var footerTitle: String?
+    public var headerView: UIView?
+    public var footerView: UIView?
+    
+    // MARK: Initialization
+    public init(headerTitle: String? = nil,
+                footerTitle: String? = nil,
+                headerView: UIView? = nil,
+                footerView: UIView? = nil,
+                rows: [CBMFormCellAttributes] = []) {
+        self.headerTitle = headerTitle
+        self.footerTitle = footerTitle
+        self.headerView = headerView
+        self.footerView = footerView
+        self.rows = rows
+    }
+    
+}
+
+/// Defines individual rows of a tableview
 public final class CBMFormCellAttributes {
     
-    // MARK: Types
+    // MARK: Nested Types
     public enum CellType {
         case unknown
         case text
         case email
         case phone
         case digits
-    }
-    
-    public struct ToolBarConfig {
-        
     }
     
     // MARK: Properties
@@ -36,12 +59,11 @@ public final class CBMFormCellAttributes {
     public var isValidClosure: ((AnyObject?) -> Bool)?
     public var value: AnyObject? {
         didSet {
-            guard let didUpdateClosure = didUpdateClosure else { return }
-            didUpdateClosure(self)
+            didUpdateClosure?(self)
         }
     }
     
-    // MARK: Init
+    // MARK: Initalization
     public init(id: Int,
                 type: CellType,
                 totalRowCountInSection: Int,

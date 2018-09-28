@@ -27,6 +27,7 @@ extension CBMFormValidateable {
 }
 
 // MARK: Form View Model Delegate
+/// Check CBMCancelSubscriptionNavigationController for implementation
 protocol CBMGeneralUserInfoFormViewModelDelegate: class {
     func didSelectFormCompleted(with userInfo: CBMCancelBillUserInfo, for screenType: CBMUserInfoFormViewController.ScreenType)
     func didSelectCancel()
@@ -58,7 +59,7 @@ final class CBMUserInfoFormViewModel: CBMFormValidateable {
     
 }
 
-// MARK: Public Interface
+// MARK: Update User Data Stroage Container
 extension CBMUserInfoFormViewModel {
 
     func update(value: AnyObject?, for tag: CBMUserInfoFormViewController.GeneralPageTag) {
@@ -66,8 +67,8 @@ extension CBMUserInfoFormViewModel {
         case .firstName: userInfo.firstName = value as? String
         case .lastName: userInfo.lastName = value as? String
         case .email: userInfo.email = value as? String
-        case .phone: userInfo.phone = value as? String
-        case .creditCard: userInfo.lastFourCreditDigits = Int((value as? String) ?? "")
+        case .phone: userInfo.phone = (value as? String)?.digitsOnly
+        case .creditCard: userInfo.lastFourCreditDigits = (value as? String)?.digitsOnly
         }
     }
     
@@ -77,9 +78,14 @@ extension CBMUserInfoFormViewModel {
         case .unit: userInfo.unit = value as? String
         case .city: userInfo.city = value as? String
         case .state: userInfo.state = value as? String
-        case .zipcode: userInfo.zipcode = Int((value as? String) ?? "")
+        case .zipcode: userInfo.zipcode = (value as? String)?.digitsOnly
         }
     }
+
+}
+
+// MARK: Delegate Functions
+extension CBMUserInfoFormViewModel {
     
     func didSelectFormCompleted() {
         delegate?.didSelectFormCompleted(with: userInfo, for: screenType)

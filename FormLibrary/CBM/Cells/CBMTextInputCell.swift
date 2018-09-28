@@ -91,10 +91,8 @@ extension CBMTextInputCell {
                 formViewController?.view.endEditing(true)
                 return
         }
-        let nextIndexPath = IndexPath(row: id - 1, section: 0)
-        guard let nextCell = formViewController?.tableView.cellForRow(at: nextIndexPath),
-            let textField = UIView.findFirstTextField(in: nextCell) else { return }
-        textField.becomeFirstResponder()
+        let previousIndexPath = IndexPath(row: id - 1, section: 0)
+        setTextFieldAsFirstResponder(at: previousIndexPath)
     }
     
     private func didSelectDownArrow() {
@@ -105,8 +103,12 @@ extension CBMTextInputCell {
                 return
         }
         let nextIndexPath = IndexPath(row: id + 1, section: 0)
-        guard let nextCell = formViewController?.tableView.cellForRow(at: nextIndexPath),
-            let textField = UIView.findFirstTextField(in: nextCell) else { return }
+        setTextFieldAsFirstResponder(at: nextIndexPath)
+    }
+    
+    private func setTextFieldAsFirstResponder(at indexPath: IndexPath) {
+        guard let cell = formViewController?.tableView.cellForRow(at: indexPath),
+              let textField = UIView.findFirstTextField(in: cell) else { return }
         textField.becomeFirstResponder()
     }
     

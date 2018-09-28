@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// All custom cells for tableview forms should inheret from this root class
 open class CBMFormRootCell: UITableViewCell {
     
     // MARK: Properties
@@ -20,7 +21,7 @@ open class CBMFormRootCell: UITableViewCell {
     
     open weak var formViewController: CBMFormTableViewController?
     
-    // MARK: Init
+    // MARK: Initalization
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
@@ -30,19 +31,21 @@ open class CBMFormRootCell: UITableViewCell {
     }
     
     // MARK: Public interface
+    
+    /// Called once upon cell initalization
+    /// Used to setup inital autolayout constraints
     open func configure() {
-        /// override
+        /// Should override
     }
     
+    /// Called every time cellForRowAt is called
+    /// Used for data binding and dynamic configuration
     open func update() {
-        /// override
-    }
-    
-    open class func formRowCellHeight() -> CGFloat {
-        return 44.0
+        /// Should override
     }
 
 }
+
 
 
 

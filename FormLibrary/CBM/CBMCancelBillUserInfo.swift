@@ -8,16 +8,16 @@
 
 import Foundation
 
-struct CBMCancelBillUserInfo {
+final class CBMCancelBillUserInfo {
     var firstName: String?
     var lastName: String?
     var email: String?
     var phone: String?
-    var lastFourCreditDigits: Int?
+    var lastFourCreditDigits: String?
     
     var street: String?
     var unit: String?
     var city: String?
     var state: String?
-    var zipcode: Int?
+    var zipcode: String?
 }

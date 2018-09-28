@@ -12,7 +12,6 @@
 		98119532215B158F003990DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98119530215B158F003990DE /* LaunchScreen.storyboard */; };
 		9811953D215B158F003990DE /* FormLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9811953C215B158F003990DE /* FormLibraryTests.swift */; };
 		98119548215B158F003990DE /* FormLibraryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98119547215B158F003990DE /* FormLibraryUITests.swift */; };
-		98119556215B15CD003990DE /* CellAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98119555215B15CD003990DE /* CellAttributes.swift */; };
 		98119558215B1860003990DE /* CBMFormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98119557215B1860003990DE /* CBMFormTableViewController.swift */; };
 		9811955A215B1966003990DE /* CBMFormSectionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98119559215B1966003990DE /* CBMFormSectionAttributes.swift */; };
 		9811955C215B1BD1003990DE /* CBMFormRootCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9811955B215B1BD1003990DE /* CBMFormRootCell.swift */; };
@@ -59,7 +58,6 @@
 		98119543215B158F003990DE /* FormLibraryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FormLibraryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98119547215B158F003990DE /* FormLibraryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLibraryUITests.swift; sourceTree = "<group>"; };
 		98119549215B158F003990DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		98119555215B15CD003990DE /* CellAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellAttributes.swift; sourceTree = "<group>"; };
 		98119557215B1860003990DE /* CBMFormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMFormTableViewController.swift; sourceTree = "<group>"; };
 		98119559215B1966003990DE /* CBMFormSectionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMFormSectionAttributes.swift; sourceTree = "<group>"; };
 		9811955B215B1BD1003990DE /* CBMFormRootCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMFormRootCell.swift; sourceTree = "<group>"; };
@@ -129,11 +127,9 @@
 				9811952E215B158F003990DE /* Assets.xcassets */,
 				98119530215B158F003990DE /* LaunchScreen.storyboard */,
 				98119533215B158F003990DE /* Info.plist */,
-				98119555215B15CD003990DE /* CellAttributes.swift */,
-				98119557215B1860003990DE /* CBMFormTableViewController.swift */,
-				98119559215B1966003990DE /* CBMFormSectionAttributes.swift */,
 				98D7AF68215C321C00DD79F5 /* CBMAddressInfoViewController.swift */,
 				98D7AF6A215C322D00DD79F5 /* CBMAddressInfoViewModel.swift */,
+				98EE8492215DC7F000E7A77D /* Form Lib */,
 				98EE8482215DC23C00E7A77D /* CBM */,
 			);
 			path = FormLibrary;
@@ -193,10 +189,19 @@
 		98EE8491215DC4CD00E7A77D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				9811955B215B1BD1003990DE /* CBMFormRootCell.swift */,
 				9811955F215B2407003990DE /* CBMTextInputCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		98EE8492215DC7F000E7A77D /* Form Lib */ = {
+			isa = PBXGroup;
+			children = (
+				98119559215B1966003990DE /* CBMFormSectionAttributes.swift */,
+				98119557215B1860003990DE /* CBMFormTableViewController.swift */,
+				9811955B215B1BD1003990DE /* CBMFormRootCell.swift */,
+			);
+			path = "Form Lib";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,7 +338,6 @@
 				98D7AF63215BFEE400DD79F5 /* CBMGeneralUserInfoViewModel.swift in Sources */,
 				98EE8484215DC2BF00E7A77D /* CBMCustomKeyboardToolBar.swift in Sources */,
 				98119558215B1860003990DE /* CBMFormTableViewController.swift in Sources */,
-				98119556215B15CD003990DE /* CellAttributes.swift in Sources */,
 				98EE848E215DC3D600E7A77D /* CBMUserInfoHeaderView.swift in Sources */,
 				98119528215B158D003990DE /* AppDelegate.swift in Sources */,
 				98D7AF67215C1A5E00DD79F5 /* CBMCancelSubscriptionNavigationController.swift in Sources */,
