@@ -29,6 +29,12 @@ final class CBMCancelSubscriptionNavigationController: UINavigationController, C
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         bindViewModel()
+        self.navigationItem.title = "Hey"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //configureNavBar()
     }
     
     private func bindViewModel() {
@@ -45,6 +51,10 @@ final class CBMCancelSubscriptionNavigationController: UINavigationController, C
         }
     }
     
+    @objc func didSelectBackButton(_ sender: UIBarButtonItem) {
+        self.popViewController(animated: true)
+    }
+    
 }
 
 // MARK: Navigation
@@ -52,7 +62,7 @@ extension CBMCancelSubscriptionNavigationController {
     
     private func toGeneralInfo() {
         let vm = CBMUserInfoFormViewModel(userInfo: userInfo, screenType: .generalInfo)
-        let vc = CBMUserInfoFormViewController(viewModel: vm, screenType: .generalInfo, tableViewStyle: .grouped)
+        let vc = CBMUserInfoFormViewController(viewModel: vm, screenType: .generalInfo, navBarTitleText: "My custom title", tableViewStyle: .grouped)
         vm.delegate = self
         vc.viewModel = vm
         self.pushViewController(vc, animated: false)
@@ -60,7 +70,7 @@ extension CBMCancelSubscriptionNavigationController {
     
     private func toEnterAddressData() {
         let vm = CBMUserInfoFormViewModel(userInfo: userInfo, screenType: .addressInfo)
-        let vc = CBMUserInfoFormViewController(viewModel: vm, screenType: .addressInfo, tableViewStyle: .grouped)
+        let vc = CBMUserInfoFormViewController(viewModel: vm, screenType: .addressInfo, navBarTitleText: "My custom title", tableViewStyle: .grouped)
         vm.delegate = self
         vc.viewModel = vm
         self.pushViewController(vc, animated: true)
@@ -89,7 +99,7 @@ extension CBMCancelSubscriptionNavigationController: CBMGeneralUserInfoFormViewM
     }
     
     func didSelectCancel() {
-        self.dismiss(animated: true, completion: nil)
+        dismissByPush()
     }
     
 }
@@ -101,6 +111,32 @@ extension CBMCancelSubscriptionNavigationController {
         static let confirmVCTopLabelText = "Going, Going..."
         static let confirmVCBottomLabelText = "Gone in 3-7 days. And you lowered your monthly bills."
     }
+    
+}
+
+extension UIViewController {
+    
+    func dismissByPush() {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft
+        self.view.window?.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
+    }
+    
+}
+
+
+class TestNavViewModel {
+    
+    var vmType: CBMUserInfoFormViewModel.Type
+    
+    init(vmType: CBMUserInfoFormViewModel.Type) {
+        self.vmType = vmType
+    }
+    
     
 }
 

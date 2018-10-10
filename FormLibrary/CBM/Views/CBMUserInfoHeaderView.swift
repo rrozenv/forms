@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class CBMUserInfoHeaderView: UIView {
+final class CBMUserInfoHeaderView: CBMFormRootHeaderFooterView {
     
     struct Properties {
         let topLabelText: String
@@ -19,12 +19,8 @@ final class CBMUserInfoHeaderView: UIView {
     let topLabel = UILabel()
     let bottomLabel = UILabel()
     
-    required init?(coder aDecoder: NSCoder) {
-        return nil
-    }
-    
-    init() {
-        super.init(frame: .zero)
+    override func update() {
+        super.update()
         setupUI()
         setupConstraints()
     }
@@ -36,6 +32,8 @@ final class CBMUserInfoHeaderView: UIView {
     }
     
     private func setupUI() {
+        topLabel.text = cellAttributes?.title
+        bottomLabel.text = cellAttributes?.subTitle
         topLabel.textAlignment = .center
         bottomLabel.textAlignment = .center
     }

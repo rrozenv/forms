@@ -31,6 +31,8 @@ open class CBMFormRootCell: UITableViewCell {
     }
     
     // MARK: Public interface
+    open class func formViewController(_ formViewController: CBMFormTableViewController, didSelectRow: CBMFormRootCell) {
+    }
     
     /// Called once upon cell initalization
     /// Used to setup inital autolayout constraints
@@ -44,6 +46,34 @@ open class CBMFormRootCell: UITableViewCell {
         /// Should override
     }
 
+}
+
+open class CBMFormRootHeaderFooterView: UIView {
+    
+    open weak var cellAttributes: CBMFormHeaderFooterAttributes? {
+        didSet {
+            self.update()
+        }
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        return nil
+    }
+    
+    deinit {
+        print("CBMFormRootHeaderFooterView deinit")
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    /// Called every time cellForRowAt is called
+    /// Used for data binding and dynamic configuration
+    open func update() {
+        /// Should override
+    }
+    
 }
 
 

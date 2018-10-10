@@ -58,25 +58,26 @@ extension CBMFormTableViewController {
     
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellAttributes = fetchCellAttributes(at: indexPath)
+        
+        if let selectedRow = tableView.cellForRow(at: indexPath) as? CBMFormRootCell {
+            if let formBaseCellClass = fetchCellClass(from: cellAttributes) {
+                formBaseCellClass.formViewController(self, didSelectRow: selectedRow)
+            }
+        }
+        
         cellAttributes.didSelectClosure?(cellAttributes)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].headerTitle
-    }
-    
-    open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footerTitle
-    }
-    
     open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = sections[section].headerView else { return nil }
+        guard let headerView = sections[section].headerAttributes?.view else { return nil }
+        headerView.cellAttributes = sections[section].headerAttributes
         return headerView
     }
     
     open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let footerView = sections[section].footerView else { return nil }
+        guard let footerView = sections[section].footerAttributes?.view else { return nil }
+        footerView.cellAttributes = sections[section].footerAttributes
         return footerView
     }
     

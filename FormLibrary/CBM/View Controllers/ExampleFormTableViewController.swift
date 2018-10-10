@@ -16,7 +16,7 @@ final class CBMUserInfoFormViewController: CBMFormTableViewController {
     
     // MARK: - Properties
     private let headerView = CBMUserInfoHeaderView()
-    private let footerView = CBMUserInfoFooterView()
+    private let footerView = CBMUserInfoFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
     
     lazy var didUpdateTextValueClosure: (CBMFormCellAttributes) -> Void = { [weak self] attr in
         guard let `self` = self else { return }
@@ -34,16 +34,44 @@ final class CBMUserInfoFormViewController: CBMFormTableViewController {
     // MARK: - Initalization
     convenience init(viewModel: CBMUserInfoFormViewModel,
                      screenType: ScreenType,
+                     navBarTitleText: String,
                      tableViewStyle: UITableViewStyle) {
         self.init(style: tableViewStyle)
         self.viewModel = viewModel
         self.screenType = screenType
+        self.configureNavBar(titleText: navBarTitleText)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        tableView.separatorStyle = .none
+        //self.navigationItem.title = "Hey"
         self.bindViewModel()
+    }
+    
+    @objc func didSelectBackButton(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func configureNavBar(titleText: String) {
+        //self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.barTintColor = .blue
+        self.navigationController?.navigationBar.tintColor = .red
+        
+        let leftButton = UIBarButtonItem(title: "Hello", style: .plain, target: self, action: #selector(didSelectBackButton))
+        
+        let titleLabel = UILabel()
+        let subLabel = UILabel()
+        titleLabel.text = titleText
+        subLabel.text = "Sublabel"
+        let navStackView = UIStackView(arrangedSubviews: [titleLabel, subLabel])
+        navStackView.axis = .vertical
+        navStackView.distribution = .fill
+        navStackView.spacing = 0
+        
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.titleView = navStackView
     }
     
     private func bindViewModel() {
@@ -56,12 +84,19 @@ final class CBMUserInfoFormViewController: CBMFormTableViewController {
     
     private func createSections(for screenType: ScreenType) {
         let rows = createRows(for: screenType)
-        configureHeaderView(for: screenType)
-        configureFooterView(for: screenType)
+        //configureHeaderView(for: screenType)
+  
         
-        self.sections = [ CBMFormSectionAttributes(headerView: headerView,
-                                                  footerView: footerView,
-                                                  rows: rows) ]
+        let headerAttr = CBMFormHeaderFooterAttributes(view: headerView,
+                                                       title: GeneralPageConst.topHeaderLabelText,
+                                                       subTitle: GeneralPageConst.bottomHeaderLabelText)
+        
+        self.configureFooterView(for: screenType)
+        
+        self.sections = [ CBMFormSectionAttributes(headerAttributes: headerAttr,
+                                                   rows: rows) ]
+        
+      
     }
     
     private func createRows(for screenType: ScreenType) -> [CBMFormCellAttributes] {
@@ -69,6 +104,7 @@ final class CBMUserInfoFormViewController: CBMFormTableViewController {
         case .generalInfo:
             return [
                 createFirstNameRow(),
+                //createDateRow(),
                 createLastNameRow(),
                 createEmailRow(),
                 createPhoneRow(),
@@ -117,6 +153,21 @@ extension CBMUserInfoFormViewController {
                                      cellClass: CBMTextInputCell.self,
                                      didUpdateClosure: didUpdateTextValueClosure,
                                      isValidClosure: isValidClosure)
+    }
+    
+    private func createDateRow() -> CBMFormCellAttributes {
+//        let isValidClosure: (AnyObject?) -> Bool = { value in
+//            guard let text = value as? String else { return false }
+//            return text.count > 3
+//        }
+        
+        return CBMFormCellAttributes(id: GeneralPageTag.firstName.rawValue,
+                                     type: .text,
+                                     totalRowCountInSection: GeneralPageTag.allTags.count,
+                                     title: GeneralPageConst.firstNameTitle,
+                                     placeholder: GeneralPageConst.firstNameTitle,
+                                     cellClass: FormDateCell.self,
+                                     didUpdateClosure: didUpdateTextValueClosure)
     }
     
     private func createLastNameRow() -> CBMFormCellAttributes {
@@ -257,11 +308,11 @@ extension CBMUserInfoFormViewController {
         let isValidClosure: (AnyObject?) -> Bool = { value in
             guard let text = value as? String,
                 let _ = Int(text) else { return false }
-            return text.count == 5
+            return text.count == 4
         }
         
         return CBMFormCellAttributes(id: AddressPageTag.zipcode.rawValue,
-                                     type: .digits,
+                                     type: .text,
                                      totalRowCountInSection: AddressPageTag.allTags.count,
                                      title: AddressPageConst.zipCodeTitle,
                                      placeholder: AddressPageConst.cityTitle,
@@ -275,14 +326,14 @@ extension CBMUserInfoFormViewController {
 // MARK: Header & Footer View Setup
 extension CBMUserInfoFormViewController {
     
-    private func configureHeaderView(for screenType: ScreenType) {
-        switch screenType {
-        case .generalInfo:
-            headerView.configure(with: CBMUserInfoHeaderView.Properties(topLabelText: GeneralPageConst.topHeaderLabelText, bottomLabelText: GeneralPageConst.bottomHeaderLabelText))
-        case .addressInfo:
-            headerView.configure(with: CBMUserInfoHeaderView.Properties(topLabelText: AddressPageConst.topHeaderLabelText, bottomLabelText: nil))
-        }
-    }
+//    private func configureHeaderView(for screenType: ScreenType) {
+//        switch screenType {
+//        case .generalInfo:
+//            headerView.configure(with: CBMUserInfoHeaderView.Properties(topLabelText: GeneralPageConst.topHeaderLabelText, bottomLabelText: GeneralPageConst.bottomHeaderLabelText))
+//        case .addressInfo:
+//            headerView.configure(with: CBMUserInfoHeaderView.Properties(topLabelText: AddressPageConst.topHeaderLabelText, bottomLabelText: nil))
+//        }
+//    }
     
     private func configureFooterView(for screenType: ScreenType) {
         switch screenType {
@@ -293,6 +344,7 @@ extension CBMUserInfoFormViewController {
         }
         footerView.topButton.addTarget(self, action: #selector(didSelectNextButton), for: .touchUpInside)
         footerView.bottomButton.addTarget(self, action: #selector(didSelectCancelButton), for: .touchUpInside)
+        tableView.tableFooterView = footerView
     }
     
 }

@@ -17,10 +17,12 @@
 		9811955C215B1BD1003990DE /* CBMFormRootCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9811955B215B1BD1003990DE /* CBMFormRootCell.swift */; };
 		9811955E215B2245003990DE /* ExampleFormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9811955D215B2245003990DE /* ExampleFormTableViewController.swift */; };
 		98119560215B2407003990DE /* CBMTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9811955F215B2407003990DE /* CBMTextInputCell.swift */; };
+		9818A214216E425000868565 /* CBMFormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818A213216E425000868565 /* CBMFormTextField.swift */; };
 		98D7AF63215BFEE400DD79F5 /* CBMGeneralUserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7AF62215BFEE400DD79F5 /* CBMGeneralUserInfoViewModel.swift */; };
 		98D7AF67215C1A5E00DD79F5 /* CBMCancelSubscriptionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7AF66215C1A5E00DD79F5 /* CBMCancelSubscriptionNavigationController.swift */; };
 		98D7AF69215C321C00DD79F5 /* CBMAddressInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7AF68215C321C00DD79F5 /* CBMAddressInfoViewController.swift */; };
 		98D7AF6B215C322D00DD79F5 /* CBMAddressInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7AF6A215C322D00DD79F5 /* CBMAddressInfoViewModel.swift */; };
+		98DE36BC215EEAB800AD1866 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DE36BB215EEAB800AD1866 /* Style.swift */; };
 		98EE8484215DC2BF00E7A77D /* CBMCustomKeyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EE8483215DC2BF00E7A77D /* CBMCustomKeyboardToolBar.swift */; };
 		98EE8486215DC2DC00E7A77D /* CBMCancelBillUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EE8485215DC2DC00E7A77D /* CBMCancelBillUserInfo.swift */; };
 		98EE8488215DC32200E7A77D /* CBMConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EE8487215DC32200E7A77D /* CBMConfirmationViewController.swift */; };
@@ -63,10 +65,12 @@
 		9811955B215B1BD1003990DE /* CBMFormRootCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMFormRootCell.swift; sourceTree = "<group>"; };
 		9811955D215B2245003990DE /* ExampleFormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleFormTableViewController.swift; sourceTree = "<group>"; };
 		9811955F215B2407003990DE /* CBMTextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMTextInputCell.swift; sourceTree = "<group>"; };
+		9818A213216E425000868565 /* CBMFormTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMFormTextField.swift; sourceTree = "<group>"; };
 		98D7AF62215BFEE400DD79F5 /* CBMGeneralUserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMGeneralUserInfoViewModel.swift; sourceTree = "<group>"; };
 		98D7AF66215C1A5E00DD79F5 /* CBMCancelSubscriptionNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMCancelSubscriptionNavigationController.swift; sourceTree = "<group>"; };
 		98D7AF68215C321C00DD79F5 /* CBMAddressInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMAddressInfoViewController.swift; sourceTree = "<group>"; };
 		98D7AF6A215C322D00DD79F5 /* CBMAddressInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMAddressInfoViewModel.swift; sourceTree = "<group>"; };
+		98DE36BB215EEAB800AD1866 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		98EE8483215DC2BF00E7A77D /* CBMCustomKeyboardToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMCustomKeyboardToolBar.swift; sourceTree = "<group>"; };
 		98EE8485215DC2DC00E7A77D /* CBMCancelBillUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMCancelBillUserInfo.swift; sourceTree = "<group>"; };
 		98EE8487215DC32200E7A77D /* CBMConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMConfirmationViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				9811955F215B2407003990DE /* CBMTextInputCell.swift */,
+				98DE36BB215EEAB800AD1866 /* Style.swift */,
+				9818A213216E425000868565 /* CBMFormTextField.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -344,10 +350,12 @@
 				98119560215B2407003990DE /* CBMTextInputCell.swift in Sources */,
 				9811955A215B1966003990DE /* CBMFormSectionAttributes.swift in Sources */,
 				98EE8486215DC2DC00E7A77D /* CBMCancelBillUserInfo.swift in Sources */,
+				9818A214216E425000868565 /* CBMFormTextField.swift in Sources */,
 				98EE848A215DC35800E7A77D /* Extensions.swift in Sources */,
 				98D7AF69215C321C00DD79F5 /* CBMAddressInfoViewController.swift in Sources */,
 				98D7AF6B215C322D00DD79F5 /* CBMAddressInfoViewModel.swift in Sources */,
 				98EE848C215DC3A400E7A77D /* CBMUserInfoFooterView.swift in Sources */,
+				98DE36BC215EEAB800AD1866 /* Style.swift in Sources */,
 				98EE8488215DC32200E7A77D /* CBMConfirmationViewController.swift in Sources */,
 				9811955C215B1BD1003990DE /* CBMFormRootCell.swift in Sources */,
 			);

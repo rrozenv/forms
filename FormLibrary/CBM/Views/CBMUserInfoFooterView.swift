@@ -11,6 +11,11 @@ import UIKit
 
 final class CBMUserInfoFooterView: UIView {
     
+    enum Props {
+        case topLabel(Style)
+        case bottomLabel(Style)
+    }
+    
     struct Properties {
         let topLabelText: String?
         let topButtonTitle: String
@@ -22,16 +27,30 @@ final class CBMUserInfoFooterView: UIView {
     let topLabel = UILabel()
     let topButton = UIButton()
     let bottomButton = UIButton()
+    //let style: Style
     
     required init?(coder aDecoder: NSCoder) {
         return nil
     }
     
-    init() {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
         setupConstraints()
     }
+    
+//    init(style: Style) {
+//        //self.style = style
+//        super.init(frame: .zero)
+//        setupUI()
+//        setupConstraints()
+//    }
+//    
+//    init(props: [Props]) {
+//        super.init(frame: .zero)
+//        setupUI()
+//        setupConstraints()
+//    }
     
     func configure(with properties: Properties) {
         topButton.setTitle(properties.topButtonTitle, for: .normal)
@@ -71,7 +90,9 @@ final class CBMUserInfoFooterView: UIView {
         stackView.axis = .vertical
         
         self.addSubview(stackView)
-        stackView.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 30, leftConstant: 15, bottomConstant: 30, rightConstant: 15)
+        stackView.anchorCenterSuperview()
+        stackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
+//        stackView.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 30, leftConstant: 15, bottomConstant: 30, rightConstant: 15)
     }
     
 }

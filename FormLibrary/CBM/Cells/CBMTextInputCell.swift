@@ -11,19 +11,21 @@ import UIKit
 
 class CBMTextInputCell: CBMFormRootCell {
     
-    let label = UILabel()
-    let textField = UITextField()
+    let textField = CBMFormTextField()
     let toolbar = CBMCustomKeyboardToolBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
     
     override func configure() {
         setupTextField()
-        setupLabel()
         setupToolbar()
     }
     
     override func update() {
-        label.text = cellAttributes?.title
+        textField.borderActiveColor = .blue
+        textField.borderInactiveColor = .lightGray
+        textField.placeholderText = cellAttributes?.title
+        textField.placeholderColor = .lightGray
         textField.text = cellAttributes?.value as? String
+        textField.updateForValidState(cellAttributes?.isValidClosure?(nil) ?? false)
         
         textField.isSecureTextEntry = false
         textField.clearButtonMode = .whileEditing
@@ -51,7 +53,8 @@ extension CBMTextInputCell: UITextFieldDelegate {
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard var text = textField.text,
               let attributes = cellAttributes else { return }
-        contentView.backgroundColor = attributes.isValidClosure?(text as AnyObject) ?? false ? .green : .white
+        let isValid = attributes.isValidClosure?(text as AnyObject) ?? false
+        self.textField.updateForValidState(isValid)
         attributes.value = text as AnyObject
         textField.text = attributes.type == .phone ? text.phoneRepresentable() : text
     }
@@ -59,6 +62,11 @@ extension CBMTextInputCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         guard let attributes = self.cellAttributes else { return }
         cellAttributes?.didBeginEditingClosure?(attributes)
+        self.textField.animateDidBeginEditing()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        self.textField.animateDidEndEditing()
     }
     
 //    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -116,23 +124,110 @@ extension CBMTextInputCell {
 
 extension CBMTextInputCell {
     
-    private func setupLabel() {
-        contentView.addSubview(label)
-        label.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: textField.topAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 3)
-    }
-    
     private func setupTextField() {
         textField.delegate = self
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         contentView.addSubview(textField)
-        textField.anchor(left: contentView.leftAnchor,
+        textField.anchor(contentView.topAnchor,
+                         left: contentView.leftAnchor,
                          bottom: contentView.bottomAnchor,
                          right: contentView.rightAnchor,
-                         leftConstant: 20,
-                         bottomConstant: 10,
-                         rightConstant: 20,
-                         heightConstant: 50)
+                         leftConstant: 15,
+                         bottomConstant: 5,
+                         rightConstant: 15,
+                         heightConstant: 70)
     }
     
 }
 
+open class FormDateCell: CBMFormRootCell {
+    
+    // MARK: Properties
+    private let valueLabel = UILabel()
+    private let datePicker = UIDatePicker()
+    private let hiddenTextField = UITextField(frame: CGRect.zero)
+    
+    private let defaultDateFormatter = DateFormatter()
+    
+    // MARK: FormBaseCell
+    
+    open override func configure() {
+        super.configure()
+        contentView.addSubview(hiddenTextField)
+        hiddenTextField.inputView = datePicker
+        hiddenTextField.isAccessibilityElement = false
+        datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(FormDateCell.valueChanged(_:)), for: .valueChanged)
+        
+        setupLabel()
+    }
+    
+    open override func update() {
+        super.update()
+        
+        valueLabel.text = "Date Cell"
+        
+//        if let showsInputToolbar = rowDescriptor?.configuration.cell.showsInputToolbar , showsInputToolbar && hiddenTextField.inputAccessoryView == nil {
+//            hiddenTextField.inputAccessoryView = inputAccesoryView()
+//        }
+        
+        //titleLabel.text = cellAttributes?.title
+        
+//        if let rowType = cellAttributes?.type {
+//            switch rowType {
+//            case .date:
+//                datePicker.datePickerMode = .date
+//                defaultDateFormatter.dateStyle = .long
+//                defaultDateFormatter.timeStyle = .none
+//            case .time:
+//                datePicker.datePickerMode = .time
+//                defaultDateFormatter.dateStyle = .none
+//                defaultDateFormatter.timeStyle = .short
+//            default:
+//                datePicker.datePickerMode = .dateAndTime
+//                defaultDateFormatter.dateStyle = .long
+//                defaultDateFormatter.timeStyle = .short
+//            }
+//        }
+        
+        if let date = cellAttributes?.value as? Date {
+            datePicker.date = date
+            valueLabel.text = getDateFormatter().string(from: date)
+        }
+    }
+    
+    private func setupLabel() {
+        contentView.addSubview(valueLabel)
+        valueLabel.anchorCenterYToSuperview()
+        valueLabel.anchor(contentView.topAnchor, bottom: contentView.bottomAnchor, topConstant: 20, bottomConstant: 20)
+    }
+    
+    open override class func formViewController(_ formViewController: CBMFormTableViewController, didSelectRow selectedRow: CBMFormRootCell) {
+        guard let row = selectedRow as? FormDateCell else { return }
+        
+        if row.cellAttributes?.value == nil {
+            let date = Date()
+            row.cellAttributes?.value = date as AnyObject
+            row.valueLabel.text = row.getDateFormatter().string(from: date)
+            row.update()
+        }
+        
+        row.hiddenTextField.becomeFirstResponder()
+    }
+    
+    // MARK: Actions
+    
+    @objc internal func valueChanged(_ sender: UIDatePicker) {
+        cellAttributes?.value = sender.date as AnyObject
+        valueLabel.text = getDateFormatter().string(from: sender.date)
+        update()
+    }
+    
+    // MARK: Private interface
+    
+    fileprivate func getDateFormatter() -> DateFormatter {
+        return DateFormatter()
+//        guard let dateFormatter = cellAttributes?.configuration.date.dateFormatter else { return defaultDateFormatter }
+//        return dateFormatter
+    }
+}

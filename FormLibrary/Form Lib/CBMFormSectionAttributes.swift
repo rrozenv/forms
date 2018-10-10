@@ -14,21 +14,15 @@ public final class CBMFormSectionAttributes {
     
     // MARK: Properties
     public var rows: [CBMFormCellAttributes] = []
-    public var headerTitle: String?
-    public var footerTitle: String?
-    public var headerView: UIView?
-    public var footerView: UIView?
+    public var headerAttributes: CBMFormHeaderFooterAttributes?
+    public var footerAttributes: CBMFormHeaderFooterAttributes?
     
     // MARK: Initialization
-    public init(headerTitle: String? = nil,
-                footerTitle: String? = nil,
-                headerView: UIView? = nil,
-                footerView: UIView? = nil,
+    public init(headerAttributes: CBMFormHeaderFooterAttributes? = nil,
+                footerAttributes: CBMFormHeaderFooterAttributes? = nil,
                 rows: [CBMFormCellAttributes] = []) {
-        self.headerTitle = headerTitle
-        self.footerTitle = footerTitle
-        self.headerView = headerView
-        self.footerView = footerView
+        self.headerAttributes = headerAttributes
+        self.footerAttributes = footerAttributes
         self.rows = rows
     }
     
@@ -46,6 +40,85 @@ public final class CBMFormCellAttributes {
         case digits
     }
     
+//    public struct CellConfiguration {
+//        public var cellClass:                AnyClass?
+//        public var appearance:               [String : AnyObject]
+//        public var placeholder:              String?
+//        public var showsInputToolbar:        Bool
+//        public var required:                 Bool
+//        public var willUpdateClosure:        ((FormRowDescriptor) -> Void)?
+//        public var didUpdateClosure:         ((FormRowDescriptor) -> Void)?
+//        public var visualConstraintsClosure: ((FormBaseCell) -> [String])?
+//
+//        public init() {
+//            cellClass = nil
+//            appearance = [:]
+//            placeholder = nil
+//            showsInputToolbar = false
+//            required = true
+//            willUpdateClosure = nil
+//            didUpdateClosure = nil
+//            visualConstraintsClosure = nil
+//        }
+//    }
+    
+//
+//    public struct RowConfiguration {
+//        public var cell:      CellConfiguration
+//        public var selection: SelectionConfiguration
+//        public var button:    ButtonConfiguration
+//        public var stepper:   StepperConfiguration
+//        public var date:      DateConfiguration
+//        public var userInfo:  [String : AnyObject]
+//
+//        init() {
+//            cell = CellConfiguration()
+//            selection = SelectionConfiguration()
+//            button = ButtonConfiguration()
+//            stepper = StepperConfiguration()
+//            date = DateConfiguration()
+//            userInfo = [:]
+//        }
+//    }
+    
+    public struct CellConfig {
+        public var cellClass: AnyClass?
+        public var didUpdateClosure: ((CBMFormCellAttributes) -> Void)?
+        public var isValidClosure: ((AnyObject?) -> Bool)?
+        
+        public init() {
+            cellClass = nil
+            didUpdateClosure = nil
+            isValidClosure = nil
+        }
+    }
+    
+    public struct TextFieldConfig {
+        public var placeholder: String?
+        public var didBeginEditingClosure: ((CBMFormCellAttributes) -> Void)?
+        
+        public init() {
+            placeholder = nil
+            didBeginEditingClosure = nil
+        }
+    }
+    
+    public struct DateConfig {
+        public var dateFormatter: DateFormatter?
+    }
+    
+    public struct Configuration {
+        public var cell: CellConfig
+        public var textField: TextFieldConfig
+        public var date: DateConfig
+        
+        init() {
+            cell = CellConfig()
+            textField = TextFieldConfig()
+            date = DateConfig()
+        }
+    }
+
     // MARK: Properties
     public let id: Int
     public let type: CellType
@@ -69,7 +142,7 @@ public final class CBMFormCellAttributes {
                 totalRowCountInSection: Int,
                 title: String? = nil,
                 placeholder: String? = nil,
-                cellClass: AnyClass? = nil,
+                cellClass: CBMFormRootCell.Type? = nil,
                 didSelectClosure: ((CBMFormCellAttributes) -> Void)? = nil,
                 didBeginEditingClosure: ((CBMFormCellAttributes) -> Void)? = nil,
                 didUpdateClosure: ((CBMFormCellAttributes) -> Void)? = nil,
@@ -84,6 +157,31 @@ public final class CBMFormCellAttributes {
         self.didBeginEditingClosure = didBeginEditingClosure
         self.didUpdateClosure = didUpdateClosure
         self.isValidClosure = isValidClosure
+    }
+    
+}
+
+public final class CBMFormHeaderFooterAttributes {
+
+    // MARK: Properties
+    public var view: CBMFormRootHeaderFooterView
+    public var title: String?
+    public var subTitle: String?
+    public var didSelectClosure: ((CBMFormCellAttributes) -> Void)?
+    
+    deinit {
+        print("Footer attributes deinit")
+    }
+    
+    // MARK: Initalization
+    public init(view: CBMFormRootHeaderFooterView,
+                title: String? = nil,
+                subTitle: String? = nil,
+                didSelectClosure: ((CBMFormCellAttributes) -> Void)? = nil) {
+        self.view = view
+        self.title = title
+        self.subTitle = subTitle
+        self.didSelectClosure = didSelectClosure
     }
     
 }
