@@ -16,7 +16,7 @@ final class CBMUserInfoFormViewController: CBMFormTableViewController {
     
     // MARK: - Properties
     private let headerView = CBMUserInfoHeaderView()
-    private let footerView = CBMUserInfoFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
+    private let footerView = CBMUserInfoFooterView()
     
     lazy var didUpdateTextValueClosure: (CBMFormCellAttributes) -> Void = { [weak self] attr in
         guard let `self` = self else { return }
@@ -344,7 +344,12 @@ extension CBMUserInfoFormViewController {
         }
         footerView.topButton.addTarget(self, action: #selector(didSelectNextButton), for: .touchUpInside)
         footerView.bottomButton.addTarget(self, action: #selector(didSelectCancelButton), for: .touchUpInside)
+        //footerView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableFooterView = footerView
+        tableView.dynamicallySizeFooterToFit(preferredWidth: view.frame.width)
+        //tableView.setFooterView(view: footerView)
+        //tableView.setAndLayoutTableHeaderView(header: footerView)
+        //tableView.tableFooterView = footerView
     }
     
 }
@@ -418,6 +423,71 @@ extension CBMUserInfoFormViewController {
     }
     
 }
+
+extension UITableView {
+    //set the tableHeaderView so that the required height can be determined, update the header's frame and set it again
+    func setAndLayoutTableHeaderView(header: UIView) {
+        self.tableFooterView = header
+        header.setNeedsLayout()
+        header.layoutIfNeeded()
+        header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        self.tableFooterView = header
+    }
+    
+    func setFooterView(view: UIView) {
+        view.autoresizingMask = .flexibleWidth
+        view.translatesAutoresizingMaskIntoConstraints = true
+        self.tableFooterView = view
+    }
+    
+    func dynamicallySizeFooterToFit(preferredWidth: CGFloat) {
+        guard let footerView = self.tableFooterView else { return }
+        
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        let layout = NSLayoutConstraint(
+            item: footerView,
+            attribute: .width,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute:.notAnAttribute,
+            multiplier: 1,
+            constant: preferredWidth)
+        
+        footerView.addConstraint(layout)
+        
+        let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        footerView.frame = CGRect(x: 0, y: 0, width: preferredWidth, height: height)
+        footerView.removeConstraint(layout)
+        footerView.translatesAutoresizingMaskIntoConstraints = true
+        
+        self.tableFooterView = footerView
+    }
+    
+    func dynamicallySizeHeaderToFit(preferredWidth: CGFloat) {
+        guard let headerView = self.tableHeaderView else { return }
+        
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        let layout = NSLayoutConstraint(
+            item: headerView,
+            attribute: .width,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute:.notAnAttribute,
+            multiplier: 1,
+            constant: preferredWidth)
+        
+        headerView.addConstraint(layout)
+        
+        let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        headerView.frame = CGRect(x: 0, y: 0, width: preferredWidth, height: height)
+        headerView.removeConstraint(layout)
+        headerView.translatesAutoresizingMaskIntoConstraints = true
+        
+        self.tableFooterView = headerView
+    }
+    
+}
+
 
 
 

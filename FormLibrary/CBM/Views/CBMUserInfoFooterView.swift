@@ -33,8 +33,14 @@ final class CBMUserInfoFooterView: UIView {
         return nil
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setupUI()
+//        setupConstraints()
+//    }
+    
+    init() {
+        super.init(frame: .zero)
         setupUI()
         setupConstraints()
     }
@@ -90,9 +96,9 @@ final class CBMUserInfoFooterView: UIView {
         stackView.axis = .vertical
         
         self.addSubview(stackView)
-        stackView.anchorCenterSuperview()
-        stackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
-//        stackView.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 30, leftConstant: 15, bottomConstant: 30, rightConstant: 15)
+//        stackView.anchorCenterSuperview()
+//        stackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
+        stackView.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 30, leftConstant: 15, bottomConstant: 30, rightConstant: 15)
     }
     
 }
