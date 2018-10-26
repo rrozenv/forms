@@ -61,17 +61,23 @@ final class CBMUserInfoFormViewController: CBMFormTableViewController {
         
         let leftButton = UIBarButtonItem(title: "Hello", style: .plain, target: self, action: #selector(didSelectBackButton))
         
-        let titleLabel = UILabel()
-        let subLabel = UILabel()
-        titleLabel.text = titleText
-        subLabel.text = "Sublabel"
-        let navStackView = UIStackView(arrangedSubviews: [titleLabel, subLabel])
-        navStackView.axis = .vertical
-        navStackView.distribution = .fill
-        navStackView.spacing = 0
+//        let titleLabel = UILabel()
+//        let subLabel = UILabel()
+//        titleLabel.text = titleText
+//        subLabel.text = "Sublabel"
+//        let navStackView = UIStackView(arrangedSubviews: [titleLabel, subLabel])
+//        navStackView.axis = .vertical
+//        navStackView.distribution = .fill
+//        navStackView.spacing = 0
+        
+        let titleView = CBMFormNavTitleView()
+        titleView.topLabel.text = "Top label text is really long here"
+        titleView.bottomLabel.text = "Step 1 of 2"
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.widthAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
         
         navigationItem.leftBarButtonItem = leftButton
-        navigationItem.titleView = navStackView
+        navigationItem.titleView = titleView
     }
     
     private func bindViewModel() {
