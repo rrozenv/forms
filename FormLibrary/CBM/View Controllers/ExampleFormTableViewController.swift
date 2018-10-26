@@ -71,7 +71,7 @@ final class CBMUserInfoFormViewController: CBMFormTableViewController {
 //        navStackView.spacing = 0
         
         let titleView = CBMFormNavTitleView()
-        titleView.topLabel.text = "Top label text is really long here"
+        titleView.topLabel.text = "Top label"
         titleView.bottomLabel.text = "Step 1 of 2"
         titleView.translatesAutoresizingMaskIntoConstraints = false
         titleView.widthAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true

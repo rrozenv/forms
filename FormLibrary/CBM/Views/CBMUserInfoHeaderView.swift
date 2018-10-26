@@ -17,6 +17,7 @@ final class CBMFormNavTitleView: UIView {
     
     init() {
         super.init(frame: .zero)
+        setupUI()
         setupContraints()
     }
     
